@@ -4,6 +4,7 @@
 {% endblock user %} 
 
 {% block contents %} <!--콘텐츠 시작-->
+<p>{{uid}}님의 판매 목록</p>
 {% if length == 0 %}
     <p>작성된 포스트가 없습니다. </p>
 {% else %}
@@ -11,9 +12,7 @@
     {% for post in post_list %}
     <a href="{{url_for('post',pid=post[0])}}">
         <div>
-        {{post[1].uid}}
         {{post[1].title}}
-        {{post[1].cost}}
         </div>
     </a>
     

@@ -59,7 +59,7 @@ def logout():
         return redirect(url_for("login"))
 
 
-
+#글 작성
 @app.route("/write")
 def write():
     if "uid" in session:
@@ -78,6 +78,16 @@ def write_done():
     DB.write_post(title,contents,cost,uid)
     return redirect(url_for("index"))
 
+#글 목록 보기
+@app.route("/user/<string:uid>")
+def user_posts(uid):
+    user_post = DB.get_user(uid)
+    if user_post == None:
+        length = 0
+    else :
+        length = len(user_post)
+    
+    return render_template("user_detail.html",post_list = user_post, length = length,uid = uid)
 
 
 
@@ -89,7 +99,7 @@ def post_list():
     else:
         length = len(post_list)
 
-    return render_template('product_list.html',post_list = post_list.items(),lenght = length)
+    return render_template('product_list.html',post_list = post_list,length = length)
 
 
 @app.route("/post/<string:pid>")

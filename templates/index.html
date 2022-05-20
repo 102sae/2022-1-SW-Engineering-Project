@@ -3,10 +3,12 @@
 {% block user %} <!--로그인 관련-->
 
 {% if user == "Login" %} <!--로그인이 안되어 있을 경우 로그인 링크-->
-<a href= "{{url_for('login')}}" >Login</a>
+<a href= "{{url_for('login')}}" >로그인</a>
+<a href= "{{url_for('signin')}}" >회원가입</a>
 {% else %} <!--로그인이 되어 있을 경우-->
 <p>{{ user }}</p> <!--유저 정보-->
-<a href= "{{url_for('logout')}}" >Logout</a><!--로그인이 되어 있을 경우 로그아웃 링크-->
+<a href= "{{url_for('user_posts',uid=user)}}" >내 글 모아보기</a><!--로그인이 되어 있을 경우 로그아웃 링크-->
+<a href= "{{url_for('logout')}}" >로그아웃</a><!--로그인이 되어 있을 경우 로그아웃 링크-->
 <a href= "{{url_for('write')}}" >새글 추가하기</a><!--로그인이 되어 있을 경우 글 작성-->
 {% endif %}
 

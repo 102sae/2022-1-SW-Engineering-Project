@@ -67,10 +67,11 @@ class DBModule:
     def get_user(self,uid):
         post_list = []
         users_post = self.db.child("posts").get().val()
-        for post in users_post.items():
-            if post[1]["uid"] == uid:
-                post_list.append(post)
-        return post_list
+        if users_post != None:
+             for post in users_post.items():
+                if post[1]["uid"] == uid:
+                    post_list.append(post)
+             return post_list
             
 
     def search(self):
