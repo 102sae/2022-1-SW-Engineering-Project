@@ -1,0 +1,24 @@
+{% extends "base.html" %} <!--상단바 고정-->
+
+{% block message %} <!--메세지 시작-->
+{% with messages = get_flashed_messages(with_categories=true) %} <!--flash-->
+
+{% if messages %}
+<p> {{messages[0][1]}}</p>
+{% endif %}
+
+{% endwith %}
+{% endblock message %} <!--메세지 끝-->
+
+{% block contents%} <!--콘텐츠 시작-->
+<form action="{{url_for('write_done')}}" method="get">
+    <input type="text" value="제목을 입력해주세요" name="title" id="tutle" required/>
+    <input type="text" value="내용을 입력해주세요" name="contents" id="contents" required/>
+    <input type="number" value="가격" name="cost" id="cost" required/>
+    
+    <button type="submit">post</button>
+</form>
+
+
+
+{% endblock contents %} <!--콘텐츠 끝-->

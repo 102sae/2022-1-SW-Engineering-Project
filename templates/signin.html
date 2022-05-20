@@ -1,0 +1,25 @@
+{% extends "base.html" %} <!--상단바 고정-->
+
+{% block message %} <!--메세지 시작-->
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+{% if messages %}
+<p> {{messages[0][1]}}</p>
+{% endif %}
+{% endwith %}
+{% endblock message %} <!--메세지 끝-->
+
+{% block contents%} <!--콘텐츠 시작-->
+
+
+<h1>DAPARA</h1>
+<form action="{{url_for("signin_done")}}" method="get">
+    <input type="name" name="name" id="name" placeholder="NAME" required/>
+    <input type="email" name="email" id="email" placeholder="EMAIL" required/>
+    <input type="text" name="id" id="id" placeholder="ID" required/>
+    <input type="password" name="pwd" id="pwd" placeholder="PASSWORD" required/>
+    <button type="submit">SIGN IN</button>
+   
+    
+</form>
+{% endblock contents %} <!--콘텐츠 끝-->
