@@ -1,25 +1,68 @@
-{% extends "base.html" %} <!--상단바 고정-->
-
-{% block message %} <!--메세지 시작-->
+{% block message %}
+<!--메세지 시작-->
 {% with messages = get_flashed_messages(with_categories=true) %}
 
 {% if messages %}
 <p> {{messages[0][1]}}</p>
 {% endif %}
 {% endwith %}
-{% endblock message %} <!--메세지 끝-->
+{% endblock message %}
+<!--메세지 끝-->
 
-{% block contents%} <!--콘텐츠 시작-->
+{% block contents%}
+<!--콘텐츠 시작-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/style.css" />
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            height: 80%;
+            align-items: center;
+            flex-direction: column;
+
+            margin-top: 30px;
+        }
 
 
-<h1>DAPARA</h1>
-<form action="{{url_for("signin_done")}}" method="get">
-    <input type="name" name="name" id="name" placeholder="NAME" required/>
-    <input type="email" name="email" id="email" placeholder="EMAIL" required/>
-    <input type="text" name="id" id="id" placeholder="ID" required/>
-    <input type="password" name="pwd" id="pwd" placeholder="PASSWORD" required/>
-    <button type="submit">SIGN IN</button>
-   
-    
-</form>
-{% endblock contents %} <!--콘텐츠 끝-->
+
+    </style>
+</head>
+
+<body>
+
+    <div class="main_name"><a href="{{url_for('index')}}"><I>DAPARA</I></a>
+        <p class="main_name_p" >중고 거래 1등 플랫폼</p>
+    </div>
+    <div class="warp">
+        <h1>회원 가입</h1>
+        <div class="signin_form">
+            <form action="{{url_for("signin_done")}}" method="get">
+                <input class = "signin_input" type="name" name="name" id="name" placeholder="NAME" required />
+                <input class = "signin_input" type="email" name="email" id="email" placeholder="EMAIL" required />
+                <input class = "signin_input" type="text" name="id" id="id" placeholder="ID" required />
+                <input class = "signin_input" type="password" name="pwd" id="pwd" placeholder="PASSWORD" required />
+                <button type="submit">SIGN IN</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+
+
+
+{% endblock contents %}
+<!--콘텐츠 끝-->

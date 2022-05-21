@@ -1,20 +1,43 @@
-{% extends "base.html" %} <!--상단바 고정-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/style.css" />  
+</head>
+<body>
+    {% block user %} <!--로그인 관련-->
+       
+    {% if user == "Login" %} <!--로그인이 안되어 있을 경우 로그인 링크-->
+    <div class="href_logout">
+        <a class="login_link" href= "{{url_for('login')}}" >로그인</a>
+        <a id="signin_link" href= "{{url_for('signin')}}" >회원가입</a>
+    </div>
+    {% else %} <!--로그인이 되어 있을 경우-->
+    <div class="href_login">    
+        <a href= "{{url_for('user_posts',uid=user)}}" >내 상점</a><!--로그인이 되어 있을 경우 로그아웃 링크-->
+        <a href= "{{url_for('write')}}" >상품 올리기</a><!--로그인이 되어 있을 경우 글 작성-->
+        <a class="login_link" href= "{{url_for('logout')}}" >로그아웃</a><!--로그인이 되어 있을 경우 로그아웃 링크-->
+    </div>
+    {% endif %}
+    {% endblock user %} 
 
-{% block user %} <!--로그인 관련-->
+  
+<div class="head_more">
 
-{% if user == "Login" %} <!--로그인이 안되어 있을 경우 로그인 링크-->
-<a href= "{{url_for('login')}}" >로그인</a>
-<a href= "{{url_for('signin')}}" >회원가입</a>
-{% else %} <!--로그인이 되어 있을 경우-->
-<p>{{ user }}</p> <!--유저 정보-->
-<a href= "{{url_for('user_posts',uid=user)}}" >내 글 모아보기</a><!--로그인이 되어 있을 경우 로그아웃 링크-->
-<a href= "{{url_for('logout')}}" >로그아웃</a><!--로그인이 되어 있을 경우 로그아웃 링크-->
-<a href= "{{url_for('write')}}" >새글 추가하기</a><!--로그인이 되어 있을 경우 글 작성-->
-{% endif %}
+    {% extends "base.html" %} <!--상단바 고정-->
+    {% block contents %} <!--콘텐츠 시작-->
 
-<!--로그인 상관없이 글 보기-->
-<a href= "{{url_for('post_list')}}" >글 목록 보기</a>
-{% endblock user %} 
+    <!--로그인 상관없이 글 보기-->
+    <div class="more_product">
+        <a href= "{{url_for('post_list')}}" >더 많은 상품 보러가기</a>
+    </div>
+    {% endblock contents %}
 
-{% block contents %} <!--콘텐츠 시작-->
-{% endblock contents %}
+</div>
+
+
+
+</body>
+</html>

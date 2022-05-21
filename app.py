@@ -1,11 +1,20 @@
 
+from ast import keyword
 from flask import Flask,redirect,render_template,url_for, request, flash, session
-
+from werkzeug.utils import secure_filename
 from DB_handler import DBModule
+import os
+import urllib.request
 
 app = Flask(__name__)
 app.secret_key = "skjdbfbaskbdjbff"
 DB = DBModule()
+
+UPLOAD_FOLDER = 'static/img/'
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+app.config["MAX_CONTENT_PATH"] = 16*1024*1024
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+ 
 
 @app.route("/") #홈
 def index():
@@ -60,6 +69,32 @@ def logout():
 
 
 #글 작성
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+'''
+사진 업로드
+@app.route('/uploadpost')
+def home():
+    return render_template('file_upload.html')
+
+@app.route('/uploadpost',  methods=['POST'])
+def upload_image():
+    file = request.files['file']
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        flash('Image successfully uploaded and displayed below')
+        return render_template('file_upload.html', filename=filename)
+    else:
+        flash('Allowed image types are - png, jpg, jpeg, gif')
+        return redirect(request.url)
+
+@app.route('/display/<filename>')
+def display_image(filename):
+    return redirect(url_for('static', filename='img/' + filename), code=301)
+'''
+
 @app.route("/write")
 def write():
     if "uid" in session:
@@ -68,15 +103,29 @@ def write():
         return redirect(url_for("login"))
     
 
-@app.route("/write_done",methods=["get"])
+@app.route("/write_done",methods=['GET','POST'])
 def write_done():
     title  = request.args.get("title") 
     contents  = request.args.get("contents")
     cost = request.args.get("cost")
-    uid = session.get("uid")
-    
-    DB.write_post(title,contents,cost,uid)
+    keyword = request.args.get("keyword")
+    uid = session.get("uid") # 글 내용
+    DB.write_post(title,contents,cost,keyword,uid)
+
     return redirect(url_for("index"))
+
+#글 삭제
+@app.route("/delete_done",methods=['GET','POST'])
+def delete_done():
+    title  = request.args.get("title") 
+    contents  = request.args.get("contents")
+    cost = request.args.get("cost")
+    uid = session.get("uid") # 글 내용
+    DB.write_post(title,contents,cost,uid)
+
+    return redirect(url_for("index"))
+
+
 
 #글 목록 보기
 @app.route("/user/<string:uid>")
@@ -99,7 +148,7 @@ def post_list():
     else:
         length = len(post_list)
 
-    return render_template('product_list.html',post_list = post_list,length = length)
+    return render_template('product_list.html',post_list = post_list.items(),length = length)
 
 
 @app.route("/post/<string:pid>")
@@ -107,9 +156,7 @@ def post(pid):
     post = DB.post_detail(pid)
     return render_template("product_detail.html",post = post)
 
-@app.route("/user/<uid>")
-def user(uid):
-    pass
+
 
 if __name__ == "__main__":
     app.run(debug=True)

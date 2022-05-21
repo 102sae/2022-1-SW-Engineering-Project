@@ -1,0 +1,172 @@
+*{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+/*메인 로고*/
+.main_name{
+    margin-top: 20px;
+    text-align: center;
+    
+}
+
+I{
+    font-size: 40px;
+    color: blue;
+    font-weight: bold;
+}
+
+.main_name_p{
+    margin-top: -8px;
+}
+
+a:link { 
+    color: inherit; /* 링크의 색상 제거 */
+    text-decoration: none; 
+}
+
+a:visited { 
+    color: inherit; /* 링크의 색상 제거 */
+    text-decoration: none;
+   }
+
+a:hover {
+    color : blue;
+    text-decoration: none;
+   }
+
+
+/*내상점*/
+.sell_list{
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+    align-items: center;
+}
+
+#sell_list-user{
+    padding: 10px;
+}
+
+/*베이스*/
+
+.main_name{
+    text-align: center;
+}
+
+.main_base_name{
+    margin-top: -20px;
+    margin-bottom: 10px;
+}
+.base_header{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+  }
+  .header-search{
+    text-align: center;
+    width: 92%;
+    position: relative;
+  }
+  
+  .header-searchbox{
+      width: 95%;
+      height: 50px;
+      border: 1px solid blue;
+      box-shadow: 5px 5px 5px rgb(148, 145, 145);
+      text-align: center;
+      margin-bottom: 20px;
+  }
+
+  .fa-magnifying-glass {
+    position: absolute;
+    top: 55%;
+    right: 11%;
+    color: blue;
+  }
+
+  /*회원가입*/
+  
+button {
+    padding: 6px;
+    margin-top: 30px;
+    background-color: blue;
+    color: white;
+    border: 0;
+}
+
+
+.signin_input {
+    padding: 5px;
+    width: 300px;
+    margin: 15px 0px;
+}
+
+/*로그인*/
+  
+.login_form{
+    text-align: center;
+    width: 240px;
+    height: 300px;
+    border: 2px solid;
+    
+}
+
+/*인덱스*/
+.href_logout,.href_login{ 
+    padding: 0px 20px;
+    margin-bottom: -5px;
+}
+
+.login_link{
+    float: right;
+}
+
+.more_product{
+    text-align: center;
+}
+
+
+/*상품 리스트*/
+
+.product_list-body{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.product_wrap{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 1000px;
+    height: 100%;
+    justify-content: center;
+}
+
+.product_list{
+    width: 250px;
+    height:300px;
+    background-color: lightblue;
+    margin: 10px 20px;
+}
+
+
+.product_list_info{
+    text-align: center;
+}
+
+.product_user_info{
+    margin-top: 3px;
+}
+
+.product_img{
+    width: 250px;
+    height:230px;
+    background-color: whitesmoke;
+}
+

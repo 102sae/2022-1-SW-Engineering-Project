@@ -5,19 +5,44 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DAPARA</title>
+    <link rel="stylesheet" href="static/style.css" />
+    <style>
+      .main_name{
+        margin-top: 200px;
+        margin-bottom: 10px;
+      }
+      I{
+        font-size: 60px;
+      }
+    </style>
   </head>
-  <body>
-    {% block message %} {% endblock message %}
-    
-    <header>
-      
-      <a href="{{url_for('index')}}"><p>DAPARA</p></a>
-      {% block user %}
-      
-      {% endblock user %}
-    </header>
-    {% block contents %}} {% endblock contents %}
 
+  <body>
+
+    <header class="base_header"> 
+        <div class="main_name"><a href="{{url_for('index')}}"><I >DAPARA</I></a></div>
+        <div class="header-search">
+        
+        <input
+          class="header-searchbox"
+          type="text"
+          placeholder="물품명을 검색하세요"
+        />
+      </div>
+      </div>
+
+      <div class="user">
+
+    </header>
+    
+    {% block contents %} <!--콘텐츠 시작-->
+
+    {% endblock contents %}
     <footer></footer>
+
+    <script
+      src="https://kit.fontawesome.com/8435e84bdd.js"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>

@@ -1,13 +1,91 @@
-{% extends "base.html" %} <!--상단바 고정-->
-
 {% block user %} <!--로그인 관련-->
 {% endblock user %} 
 
 {% block contents %} <!--콘텐츠 시작-->
-<p> {{post.title}} </p>
-<p>{{post.uid}}</p>
-<p>{{post.contents}}</p>
-<p>{{post.cost}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="static/style.css" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>details</title>
+    <style>
+        .main_name {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        I {
+            font-size: 40px;
+            color: blue;
+            font-weight: bold;
+        }
+
+        .main_name_p{
+            margin-top: -8px;
+        }
+
+        a {
+            color: black;
+            text-decoration: none;
+        }
+
+        *{
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        /*상품 리스트*/
+        .product_detail_warp{
+            display: flex;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+        }
+        .product_detail{
+            width: 700px;
+            height: 700px;
+            background-color: whitesmoke;
+        }
+
+        .product_detail_img{
+            width: 700px;
+            height: 450px;
+            background-color: lightblue;
+        }
+
+        .detail_title{
+            font-size: large;
+        }
+    </style>
+</head>
+<body>
+    
+
+<div class="main_name"><a href="{{url_for('index')}}"><I>DAPARA</I></a>
+    <p class="main_name_p" >중고 거래 1등 플랫폼</p>
+</div>
+
+<div class="product_detail_warp">
+    <div class="product_detail">
+        
+        <div class="product_detail_img">
+        {% if filename %}
+            <img src="{{ url_for('display_image', filename=filename) }}">
+        {% endif %}
+        </div>
+        
+    <p class="detail_title">{{post.title}} {{post.uid}}</p>
+    
+    <p >{{post.cost}}원</p>
+    <p>{{post.contents}}</p>
+
+    <p>#{{post.keyword}}</p>
+    </div>
+</div>
+    
+</body>
+</html>
+
 
 {% endblock contents %}
-
