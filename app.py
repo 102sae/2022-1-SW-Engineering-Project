@@ -1,5 +1,6 @@
 
 from ast import keyword
+from xml.dom.minicompat import NodeList
 from flask import Flask,redirect,render_template,url_for, request, flash, session
 from werkzeug.utils import secure_filename
 from DB_handler import DBModule
@@ -127,7 +128,7 @@ def delete_done():
 
 
 
-#글 목록 보기
+#로그인한 유저 글 목록 보기
 @app.route("/user/<string:uid>")
 def user_posts(uid):
     user_post = DB.get_user(uid)
@@ -137,6 +138,16 @@ def user_posts(uid):
         length = len(user_post)
     
     return render_template("user_detail.html",post_list = user_post, length = length,uid = uid)
+
+#로그인 유저 외 유저 글 목록 보기
+@app.route("/user/<string:oid>")
+def other_posts(oid):
+    other_post = DB.get_other(oid)
+    if other_post == None:
+        length = 0
+    else:
+        length = len(other_post)
+    return render_template("other_detail.html", post_list = other_post, length = length, oid = oid)
 
 
 

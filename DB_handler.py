@@ -65,7 +65,7 @@ class DBModule:
         post = self.db.child("posts").get().val()[pid]
         return post
 
-    def get_user(self,uid): #특정 유저가 쓴 글만 보기
+    def get_user(self,uid): #로그인한 유저의 마이페이지
         post_list = []
         users_post = self.db.child("posts").get().val()
         if users_post != None:
@@ -75,14 +75,14 @@ class DBModule:
              return post_list
     
 
-    def user_id(self,uid): #특정 유저가 쓴 글만 보기
-        users_post = self.db.child("posts").get().val()
-        if users_post != None:
-             for post in users_post.items():
-                if post[1]["uid"] == uid:
-                    True
-                else:
-                    False
+    def get_other(self,oid): #다른 유저의 마이페이지
+        post_other_list = []
+        others_post = self.db.child("posts").get().val()
+        if others_post != None:
+             for post in others_post.items():
+                if post[1]["uid"] == oid:
+                    post_other_list.append(post)
+             return post_other_list
 
     def search(self):
         pass

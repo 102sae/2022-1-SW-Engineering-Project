@@ -75,7 +75,7 @@
         {% endif %}
         </div>
         
-    <p class="detail_title">{{post.title}} {{post.uid}}</p>
+    <p class="detail_title">{{post.title}}<a href= "{{url_for('other_posts', oid=post.uid)}}"> {{post.uid}}</a></p>
     
     <p >{{post.cost}}원</p>
     <p>{{post.contents}}</p>
