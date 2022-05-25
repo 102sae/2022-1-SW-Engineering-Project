@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 
 <head>
+    <link rel="stylesheet" href="static/style.css" />
     <title>mypage</title>
     <style>
         .main_name {
@@ -89,6 +90,28 @@
             float: right;
             margin-left: 10px;
         }
+
+        
+        #follow__btns button{
+            all: unset;
+            background-color: aliceblue;
+            padding: 5px 10px;
+            cursor: pointer;
+            width: 80px;
+            text-align: center;
+            border-radius: 7px;
+            border: 2px solid rgba(0, 0, 0, 0.15);
+            color: rgba(0, 0, 0, 0.8);
+            text-transform: uppercase;
+            font-weight: 650;
+            font-size: 12px;
+            box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+        }
+
+        #follow__btns button:active {
+        transform: scale(0.98);
+        }
     </style>
 </head>
 
@@ -100,6 +123,9 @@
     
     <div class="sell_list">
         <p id="sell_list-user">{{uid}}님의 판매 목록</p>
+        <div id="follow__btns">
+            <button id="follow">follow</button>   
+        </div>
         {% if length == 0 %}
         <p id="nopost">판매 목록이 없습니다 </p>
         {% else %}
@@ -126,7 +152,23 @@
 
         
     </div>
-
+    <script type="text/javascript">
+        const follow = document.getElementById("follow__btns");
+        let following = false;
+        const mode = document.getElementById("follow");
+        function handleModeClick() {
+            if (following) {
+              following = false;
+              mode.innerText = "follow";
+            } else {
+              following = true;
+              mode.innerText = "unfollow";
+            }
+          }
+        
+          if (follow){
+            follow__btns.addEventListener("click",handleModeClick);
+          }</script>
 </body>
 
 </html>
