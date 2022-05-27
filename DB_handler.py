@@ -13,9 +13,10 @@ class DBModule:
     
     def signin_verification(self,uid): 
         users = self.db.child("users").get().val() #user에 저장된 모든 정보 불러오기
-        for i in users: 
-            if uid == i : #user에 해당 id가 있다면
-                return False
+        if users :
+            for i in users: 
+                if uid == i : #user에 해당 id가 있다면
+                    return False
             
         return True
 
@@ -42,10 +43,52 @@ class DBModule:
                 return False
         except: #user id 존재하지 않을 경우
             return False
-
-   
-
     
+    """ def is_following(self,uid,fid):
+        follower = []
+        users = self.db.child("follow").get().val() #user에 저장된 모든 정보 불러오기
+        print(users)
+    
+        return True"""
+        
+
+    def follow(self,uid,fid):
+        follower = []
+        followed = []
+        follower.append(fid)
+        followed.append(uid)
+        followed_ref = self. db.child("users").child(uid).child("followed")      
+        followed_ref.update({
+            'followed': fid
+        })
+
+        follower_ref = self.db.child("users").child(fid).child("follower")
+        follower_ref.update({
+            'follower': uid
+        })
+        users = self.db.child("users").get().val() #user에 저장된 모든 정보 불러오기
+        #print(users)
+        if users != None:
+             for fwr in users.items():
+                print("ㅎㅎ여기부터")
+                for i in  fwr[1].values():
+                    if type(i)==dict:
+                        if i.values() == fid:
+                            print("이미 팔로우됨")
+                        else: 
+                            print("팔로할게")
+             """
+             for key, val in users.items():
+                 print("key : {} value : {}".format(key,val)) 
+                 print("val입니당",val)"""
+        return True
+
+    def unfollow(self,uid,fwid):
+        users = self.db.child("users").get().val() #user에 저장된 모든 정보 불러오기
+        self.db.child(users[uid]).child("follows").remove(fwid) #DB에 저장
+
+            
+   
     def write_post(self,title,contents,cost,keyword,uid):
         pid = str(uuid.uuid4())[:10] #랜덤 아이디 저장
         infomation = {
@@ -65,7 +108,7 @@ class DBModule:
         post = self.db.child("posts").get().val()[pid]
         return post
 
-    def get_user(self,uid): #로그인한 유저의 마이페이지
+    def get_user(self,uid): #유저의 마이페이지
         post_list = []
         users_post = self.db.child("posts").get().val()
         if users_post != None:
@@ -74,18 +117,8 @@ class DBModule:
                     post_list.append(post)
              return post_list
     
-
-    def get_other(self,oid): #다른 유저의 마이페이지
-        post_other_list = []
-        others_post = self.db.child("posts").get().val()
-        if others_post != None:
-             for post in others_post.items():
-                if post[1]["uid"] == oid:
-                    post_other_list.append(post)
-             return post_other_list
-
     def search(self):
         pass
 
-    def following(self):
-        pass
+
+   

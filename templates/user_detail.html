@@ -1,6 +1,3 @@
-{% block user %}
-<!--로그인 관련-->
-{% endblock user %}
 
 <!DOCTYPE html>
 
@@ -123,13 +120,17 @@
     
     <div class="sell_list">
         <p id="sell_list-user">{{uid}}님의 판매 목록</p>
+        {% if user != uid %} <!--로그인한 사람과 글쓴 사람이 다를 경우 팔로우 버튼 보이게-->
         <div id="follow__btns">
-            <button id="follow">follow</button>   
+            <button id="follow"><a href="{{url_for('following_user',fid=uid)}}">follow</a></button>   
         </div>
+        {% endif %}
+        
+        
         {% if length == 0 %}
         <p id="nopost">판매 목록이 없습니다 </p>
         {% else %}
-
+        
         <div class="mypage_wrap">
             {% for post in post_list %}
             <div class="mypage_list">
@@ -144,6 +145,7 @@
                     <p >{{post[1].uid}}</p>
                 </a>
                 </div>
+                
                 <a class ="edit_delete" href="{{ url_for('index')}} ">수정</a>
                 <a class ="edit_delete" href="{{ url_for('index')}} ">삭제</a>
         </div>
@@ -156,6 +158,7 @@
         const follow = document.getElementById("follow__btns");
         let following = false;
         const mode = document.getElementById("follow");
+        
         function handleModeClick() {
             if (following) {
               following = false;

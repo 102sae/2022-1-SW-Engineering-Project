@@ -15,10 +15,12 @@
         <a id="signin_link" href= "{{url_for('signin')}}" >회원가입</a>
     </div>
     {% else %} <!--로그인이 되어 있을 경우-->
-    <div class="href_login">    
+    <div class="href_login">
         <a href= "{{url_for('user_posts',uid=user)}}" >내 상점</a> <!--로그인이 되어 있을 경우 내 판매목록으로-->
         <a href= "{{url_for('write')}}" >상품 올리기</a><!--로그인이 되어 있을 경우 글 작성-->
+       
         <a class="login_link" href= "{{url_for('logout')}}" >로그아웃</a><!--로그인이 되어 있을 경우 로그아웃 링크-->
+        
     </div>
     {% endif %}
     {% endblock user %} 
@@ -31,6 +33,7 @@
 
     <!--로그인 상관없이 글 보기-->
     <div class="more_product">
+        <p>{{user}}님 반갑습니다!</p>
         <a href= "{{url_for('post_list')}}" >더 많은 상품 보러가기</a>
     </div>
     {% endblock contents %}
