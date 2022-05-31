@@ -1,14 +1,17 @@
 
-from ast import keyword
-from xml.dom.minicompat import NodeList
 from flask import Flask,redirect,render_template,url_for, request, flash, session
 from werkzeug.utils import secure_filename
 from DB_handler import DBModule
 import os
 import urllib.request
+"""
+#define FIREBASE_HOST "trade-market-d3fe6-default-rtdb.firebaseio.com"
+#define FIREBASE_AUTH "BkztFqlcC1wLXlPfFq3AaRt13KoszmqiNVg37kxd"
 
+"""
 app = Flask(__name__)
 app.secret_key = "skjdbfbaskbdjbff"
+
 DB = DBModule()
 
 UPLOAD_FOLDER = 'static/img/'
@@ -68,11 +71,50 @@ def logout():
     else: #로그아웃 상태
         return redirect(url_for("login"))
 
+# 팔로우 기능
+@app.route("/user/<string:uid>/a")
+def following_user(uid):
+    fid = request.args.get('fid', default = 'followed', type = str) #follow할 user id가져오기
+    
+    print("uid",uid)
+    user_post = DB.get_user(fid)
+    if user_post == None:
+        length = 0
+    else :
+        length = len(user_post)
+    
+    if "uid" in session: #로그인 된 상태일 경우 
+         user = session["uid"]
+         test = DB.follow(user,fid)
+         return render_template("user_detail.html",post_list = user_post, length = length,uid = fid,user=user,isFollow =test)      
+    else:
+         user = "Login" #로그아웃 된 상태일 경우
+         return render_template("index.html",user=user)   
 
+# 언팔로우 기능
+@app.route("/user/<string:uid>/u")
+def unfollowing_user(uid):
+    fid = request.args.get('fid', default = 'followed', type = str) #follow할 user id가져오기
+    
+    print("uid",uid)
+    user_post = DB.get_user(fid)
+    if user_post == None:
+        length = 0
+    else :
+        length = len(user_post)
+    
+    if "uid" in session: #로그인 된 상태일 경우 
+         user = session["uid"]
+         test = DB.unfollow(user,fid)
+         return render_template("user_detail.html",post_list = user_post, length = length,uid = fid,user=user,isFollow =test)      
+    else:
+         user = "Login" #로그아웃 된 상태일 경우
+         return render_template("index.html",user=user)  
+    
 #글 작성
-
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 '''
 사진 업로드
 @app.route('/uploadpost')
@@ -127,46 +169,48 @@ def delete_done():
     return redirect(url_for("index"))
 
 
-
-#로그인한 유저 글 목록 보기
+#유저 글 모아 보기
 @app.route("/user/<string:uid>")
 def user_posts(uid):
+    if "uid" in session: #로그인 된 상태일 경우 
+        user = session["uid"]
+    else:
+        user = "Login" #로그아웃 된 상태일 경우
+
     user_post = DB.get_user(uid)
     if user_post == None:
         length = 0
     else :
         length = len(user_post)
     
-    return render_template("user_detail.html",post_list = user_post, length = length,uid = uid)
-
-#로그인 유저 외 유저 글 목록 보기
-@app.route("/user/<string:oid>")
-def other_posts(oid):
-    other_post = DB.get_other(oid)
-    if other_post == None:
-        length = 0
-    else:
-        length = len(other_post)
-    return render_template("other_detail.html", post_list = other_post, length = length, oid = oid)
+    isFollow = DB.is_following(user,uid) #팔로잉 여부
+    
+    return render_template("user_detail.html",post_list = user_post, length = length,uid = uid,user=user,isFollow=isFollow)
 
 
 
+
+# 글 목록 보기
 @app.route("/list")
 def post_list():
+    if "uid" in session: #로그인 된 상태일 경우 
+        user = session["uid"]
+    else:
+        user = "Login" #로그아웃 된 상태일 경우
+
     post_list = DB.post_list()
     if post_list == None :
         length = 0
     else:
         length = len(post_list)
 
-    return render_template('product_list.html',post_list = post_list.items(),length = length)
+    return render_template('product_list.html',post_list = post_list.items(),length = length,user =user)
 
 
 @app.route("/post/<string:pid>")
 def post(pid):
     post = DB.post_detail(pid)
     return render_template("product_detail.html",post = post)
-
 
 
 if __name__ == "__main__":
