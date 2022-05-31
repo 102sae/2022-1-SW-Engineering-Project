@@ -121,10 +121,18 @@
     <div class="sell_list">
         <p id="sell_list-user">{{uid}}님의 판매 목록</p>
         {% if user != uid %} <!--로그인한 사람과 글쓴 사람이 다를 경우 팔로우 버튼 보이게-->
-        <div id="follow__btns">
-            <button id="follow"><a href="{{url_for('following_user',fid=uid)}}">follow</a></button>   
+            {% if isFollow %} <!--팔로우 하고 있으면-->
+            <div id="follow__btns">
+                <button id="unfollow"><a href="{{url_for('unfollowing_user',fid=uid,uid=user)}}">unfollow</a></button>   
+            </div>
+            {% else %}
+            <div id="follow__btns">
+                <button id="follow"><a href="{{url_for('following_user',fid=uid,uid=user)}}">follow</a></button>   
         </div>
+            {% endif %}
         {% endif %}
+        
+        
         
         
         {% if length == 0 %}
@@ -151,27 +159,10 @@
         </div>
         {% endfor %}
         {% endif %}
-
+        
         
     </div>
-    <script type="text/javascript">
-        const follow = document.getElementById("follow__btns");
-        let following = false;
-        const mode = document.getElementById("follow");
-        
-        function handleModeClick() {
-            if (following) {
-              following = false;
-              mode.innerText = "follow";
-            } else {
-              following = true;
-              mode.innerText = "unfollow";
-            }
-          }
-        
-          if (follow){
-            follow__btns.addEventListener("click",handleModeClick);
-          }</script>
+    
 </body>
 
 </html>

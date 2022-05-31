@@ -44,49 +44,47 @@ class DBModule:
         except: #user id 존재하지 않을 경우
             return False
     
-    """ def is_following(self,uid,fid):
-        follower = []
-        users = self.db.child("follow").get().val() #user에 저장된 모든 정보 불러오기
-        print(users)
-    
-        return True"""
+    def is_following(self,uid,fid):
+
+        if uid == fid :
+            return True #본인은 본인을 팔로우 못해
+        followed = self.db.child("users").child(uid).child("followed").get().val()
+        if followed:
+            for key in followed:
+                if key == fid: #이미 팔로우 됨
+                    return True
+        else:
+            print("팔로우 하는 사람이 없음")
+        return False #팔로우 안된 사람이면
         
 
     def follow(self,uid,fid):
-        follower = []
-        followed = []
-        follower.append(fid)
-        followed.append(uid)
-        followed_ref = self. db.child("users").child(uid).child("followed")      
-        followed_ref.update({
-            'followed': fid
-        })
+        if self.is_following(uid,fid):
+            print("이미 팔로우하고 있습니다")
+            return True
+        else:
+            followed_ref = self.db.child("users").child(uid).child("followed") #follow 하는 사람 추가
+            information = { 
+                fid :fid
+            }     
+            followed_ref.update(information)
 
-        follower_ref = self.db.child("users").child(fid).child("follower")
-        follower_ref.update({
-            'follower': uid
-        })
-        users = self.db.child("users").get().val() #user에 저장된 모든 정보 불러오기
-        #print(users)
-        if users != None:
-             for fwr in users.items():
-                print("ㅎㅎ여기부터")
-                for i in  fwr[1].values():
-                    if type(i)==dict:
-                        if i.values() == fid:
-                            print("이미 팔로우됨")
-                        else: 
-                            print("팔로할게")
-             """
-             for key, val in users.items():
-                 print("key : {} value : {}".format(key,val)) 
-                 print("val입니당",val)"""
-        return True
+            follower_ref = self.db.child("users").child(fid).child("follower") #follow 당한 사람에게는 follower 추가
+            information = { 
+                uid :uid
+            }     
+            follower_ref.update(information)
+            return True #팔로우 함
 
-    def unfollow(self,uid,fwid):
-        users = self.db.child("users").get().val() #user에 저장된 모든 정보 불러오기
-        self.db.child(users[uid]).child("follows").remove(fwid) #DB에 저장
+    def unfollow(self,uid,fid): #uid 한지우 fid 새침
 
+        followed_ref = self.db.child("users").child(uid).child("followed") #follow 하는 사람 추가 
+        followed_ref.child(fid).remove()
+
+        follower_ref = self.db.child("users").child(fid).child("follower") #follow 당한 사람에게는 follower 추가  
+        follower_ref.child(uid).remove()
+        return False
+        
             
    
     def write_post(self,title,contents,cost,keyword,uid):

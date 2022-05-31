@@ -4,7 +4,11 @@ from werkzeug.utils import secure_filename
 from DB_handler import DBModule
 import os
 import urllib.request
+"""
+#define FIREBASE_HOST "trade-market-d3fe6-default-rtdb.firebaseio.com"
+#define FIREBASE_AUTH "BkztFqlcC1wLXlPfFq3AaRt13KoszmqiNVg37kxd"
 
+"""
 app = Flask(__name__)
 app.secret_key = "skjdbfbaskbdjbff"
 
@@ -67,19 +71,46 @@ def logout():
     else: #로그아웃 상태
         return redirect(url_for("login"))
 
-# 팔로잉 기능
-@app.route("/following/user")
-def following_user():
-    fid = request.args.get('fid', default = 'hello', type = str) #follow할 user id가져오기
+# 팔로우 기능
+@app.route("/user/<string:uid>/a")
+def following_user(uid):
+    fid = request.args.get('fid', default = 'followed', type = str) #follow할 user id가져오기
+    
+    print("uid",uid)
+    user_post = DB.get_user(fid)
+    if user_post == None:
+        length = 0
+    else :
+        length = len(user_post)
+    
     if "uid" in session: #로그인 된 상태일 경우 
          user = session["uid"]
          test = DB.follow(user,fid)
-         return render_template("following_list.html")
-        
+         return render_template("user_detail.html",post_list = user_post, length = length,uid = fid,user=user,isFollow =test)      
     else:
-        user = "Login" #로그아웃 된 상태일 경우
-        return render_template("index.html",user=user)
+         user = "Login" #로그아웃 된 상태일 경우
+         return render_template("index.html",user=user)   
 
+# 언팔로우 기능
+@app.route("/user/<string:uid>/u")
+def unfollowing_user(uid):
+    fid = request.args.get('fid', default = 'followed', type = str) #follow할 user id가져오기
+    
+    print("uid",uid)
+    user_post = DB.get_user(fid)
+    if user_post == None:
+        length = 0
+    else :
+        length = len(user_post)
+    
+    if "uid" in session: #로그인 된 상태일 경우 
+         user = session["uid"]
+         test = DB.unfollow(user,fid)
+         return render_template("user_detail.html",post_list = user_post, length = length,uid = fid,user=user,isFollow =test)      
+    else:
+         user = "Login" #로그아웃 된 상태일 경우
+         return render_template("index.html",user=user)  
+    
 #글 작성
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -152,7 +183,9 @@ def user_posts(uid):
     else :
         length = len(user_post)
     
-    return render_template("user_detail.html",post_list = user_post, length = length,uid = uid,user=user)
+    isFollow = DB.is_following(user,uid) #팔로잉 여부
+    
+    return render_template("user_detail.html",post_list = user_post, length = length,uid = uid,user=user,isFollow=isFollow)
 
 
 

@@ -33,9 +33,16 @@
 
     <!--로그인 상관없이 글 보기-->
     <div class="more_product">
+        {% if user == "Login" %} <!--로그인이 안되어 있을 경우 로그인 링크-->
+        <div class="href_login">
+        <a href= "{{url_for('post_list')}}" >더 많은 상품 보러가기</a>
+    </div>
+        {% else %} <!--로그인이 되어 있을 경우-->
+        <div class="href_login">
         <p>{{user}}님 반갑습니다!</p>
         <a href= "{{url_for('post_list')}}" >더 많은 상품 보러가기</a>
     </div>
+    {% endif %}
     {% endblock contents %}
 
 </div>
