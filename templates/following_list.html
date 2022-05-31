@@ -6,6 +6,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="static/style.css" />
 </head>
+<style>
+    
+.product_list-body{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.product_wrap{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 1000px;
+    height: 100%;
+    justify-content: center;
+}
+
+.product_list{
+    width: 250px;
+    height:300px;
+    background-color: lightblue;
+    margin: 10px 20px;
+}
+
+
+.product_list_info{
+    text-align: center;
+}
+
+.product_user_info{
+    margin-top: 3px;
+}
+
+.product_img{
+    width: 250px;
+    height:230px;
+    background-color: whitesmoke;
+}
+
+
+</style>
 
 <body >
 
@@ -38,23 +80,24 @@
         {% else %}
         
            <div class="product_wrap">
-            {% for post in post_list %}
-            <div class="product_list">
-                <div class="product_img">
-                    
-                </div>
-                <div class="product_list_info">
-                <a href="{{url_for('post',pid=post[0])}}">
-                    <div>
-                        <p class="product_user_info"> {{post[1].title}} {{post[1].cost}}원</p>
-                    </div>
-                    <p >{{post[1].uid}}</p>
-                </a>
-                </div>
-            </div>
-            
-            
-            {% endfor %}
+        
+           {% for i in range(length) %}
+           {% for post in post_list[i] %}
+           <div class="product_list">
+               <div class="product_img">
+                   
+               </div>
+               <div class="product_list_info">
+               <a href="{{url_for('post',pid=post[0])}}">
+                   <div>
+                       <p class="product_user_info"> {{post[1].title}} {{post[1].cost}}원</p>
+                   </div>
+                   <p >{{post[1].uid}}</p>
+               </a>
+               </div>
+           </div>
+           {% endfor %}
+           {% endfor %}
            </div>
         {% endif %}
         {% endblock contents %}

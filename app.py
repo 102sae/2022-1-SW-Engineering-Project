@@ -75,8 +75,7 @@ def logout():
 @app.route("/user/<string:uid>/a")
 def following_user(uid):
     fid = request.args.get('fid', default = 'followed', type = str) #follow할 user id가져오기
-    
-    print("uid",uid)
+
     user_post = DB.get_user(fid)
     if user_post == None:
         length = 0
@@ -95,8 +94,7 @@ def following_user(uid):
 @app.route("/user/<string:uid>/u")
 def unfollowing_user(uid):
     fid = request.args.get('fid', default = 'followed', type = str) #follow할 user id가져오기
-    
-    print("uid",uid)
+
     user_post = DB.get_user(fid)
     if user_post == None:
         length = 0
@@ -187,7 +185,23 @@ def user_posts(uid):
     
     return render_template("user_detail.html",post_list = user_post, length = length,uid = uid,user=user,isFollow=isFollow)
 
+# 팔로워 글 목록
+@app.route("/following/new")
+def following_list():
+    uid = request.args.get('user', default = 'user', type = str) #user id가져오기
+    if "uid" in session: #로그인 된 상태일 경우 
+        user = session["uid"]
+    else:
+        user = "Login" #로그아웃 된 상태일 경우
 
+    follower_post = DB.get_follower(uid)
+
+    if follower_post == None:
+        length = 0
+    else :
+        length = len(follower_post)
+    
+    return render_template('following_list.html',post_list = follower_post,length = length,user =user)
 
 
 # 글 목록 보기
@@ -205,6 +219,7 @@ def post_list():
         length = len(post_list)
 
     return render_template('product_list.html',post_list = post_list.items(),length = length,user =user)
+
 
 
 @app.route("/post/<string:pid>")
