@@ -18,7 +18,7 @@
     <div class="href_login">
         <a href= "{{url_for('user_posts',uid=user)}}" >내 상점</a> <!--로그인이 되어 있을 경우 내 판매목록으로-->
         <a href= "{{url_for('write')}}" >상품 올리기</a><!--로그인이 되어 있을 경우 글 작성-->
-       
+        <a href= "{{url_for('following_list',user=user)}}" >이웃 새 글</a> <!--로그인이 되어 있을 경우 팔로우한 사람들 글 목록-->    
         <a class="login_link" href= "{{url_for('logout')}}" >로그아웃</a><!--로그인이 되어 있을 경우 로그아웃 링크-->
         
     </div>

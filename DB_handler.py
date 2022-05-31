@@ -114,6 +114,27 @@ class DBModule:
                 if post[1]["uid"] == uid:
                     post_list.append(post)
              return post_list
+
+    def get_follower(self,uid): #유저의 마이페이지
+        follower_list = []
+        follower = self.db.child("users").child(uid).child("followed").get().val()
+        if follower != None:
+             for f in follower.items():
+                print( f[1])
+                follower_list.append(f[1])
+        
+        post_list = []
+        for f in follower_list:
+            post_list.append(self.get_user(f))
+        return post_list
+        
+
+
+        """ if follower_post_list != None:
+             for post in follower_post_list.items():
+                if post[1]["uid"] == 팔로워아이디:
+                    follower_post_list.append(post)
+             return follower_post_list"""
     
     def search(self):
         pass
