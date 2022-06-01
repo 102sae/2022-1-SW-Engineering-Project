@@ -158,12 +158,8 @@ def write_done():
 #글 삭제
 @app.route("/delete_done",methods=['GET','POST'])
 def delete_done():
-    title  = request.args.get("title") 
-    contents  = request.args.get("contents")
-    cost = request.args.get("cost")
-    uid = session.get("uid") # 글 내용
-    DB.write_post(title,contents,cost,uid)
-
+    pid = request.args.get('pid', default = 'pid', type = str)
+    DB.delete_post(pid)
     return redirect(url_for("index"))
 
 

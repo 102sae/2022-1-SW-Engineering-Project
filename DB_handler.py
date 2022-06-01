@@ -76,7 +76,7 @@ class DBModule:
             follower_ref.update(information)
             return True #팔로우 함
 
-    def unfollow(self,uid,fid): #uid 한지우 fid 새침
+    def unfollow(self,uid,fid): 
 
         followed_ref = self.db.child("users").child(uid).child("followed") #follow 하는 사람 추가 
         followed_ref.child(fid).remove()
@@ -98,6 +98,16 @@ class DBModule:
         }
         self.db.child("posts").child(pid).set(infomation)
 
+    def delete_post(self,pid):
+        users_post = self.db.child("posts").get().val()
+        if users_post != None:
+             for post in users_post.items():
+                print(post[0])
+                if post[0] == pid:
+                    print(pid,'삭제함')
+                    self.db.child("posts").child(pid).remove()
+        
+    
     def post_list(self): #전체 포스트
         post_lists = self.db.child("posts").get().val()
         return post_lists
@@ -128,13 +138,6 @@ class DBModule:
             post_list.append(self.get_user(f))
         return post_list
         
-
-
-        """ if follower_post_list != None:
-             for post in follower_post_list.items():
-                if post[1]["uid"] == 팔로워아이디:
-                    follower_post_list.append(post)
-             return follower_post_list"""
     
     def search(self):
         pass
