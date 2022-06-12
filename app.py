@@ -1,4 +1,5 @@
 
+from sre_parse import State
 from flask import Flask,redirect,render_template,url_for, request, flash, session
 from werkzeug.utils import secure_filename
 from DB_handler import DBModule
@@ -113,29 +114,6 @@ def unfollowing_user(uid):
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-'''
-사진 업로드
-@app.route('/uploadpost')
-def home():
-    return render_template('file_upload.html')
-
-@app.route('/uploadpost',  methods=['POST'])
-def upload_image():
-    file = request.files['file']
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        flash('Image successfully uploaded and displayed below')
-        return render_template('file_upload.html', filename=filename)
-    else:
-        flash('Allowed image types are - png, jpg, jpeg, gif')
-        return redirect(request.url)
-
-@app.route('/display/<filename>')
-def display_image(filename):
-    return redirect(url_for('static', filename='img/' + filename), code=301)
-'''
-
 @app.route("/write")
 def write():
     if "uid" in session:
@@ -151,9 +129,27 @@ def write_done():
     cost = request.args.get("cost")
     keyword = request.args.get("keyword")
     uid = session.get("uid") # 글 내용
-    DB.write_post(title,contents,cost,keyword,uid)
+    status = request.args.get("판매상태")
+    #image = request.files['image']
+    DB.write_post(title,contents,cost,keyword,uid,status)
 
     return redirect(url_for("index"))
+
+#검색
+'''
+@app.route("/searching",methods=['GET','POST'])
+def searching():
+    title  = request.args.get("title") 
+    contents  = request.args.get("contents")
+    cost = request.args.get("cost")
+    keyword = request.args.get("keyword")
+    uid = session.get("uid") # 글 내용
+    status = request.args.get("판매상태")
+    #image = request.files['image']
+    DB.write_post(title,contents,cost,keyword,uid,status)
+
+    return redirect(url_for("index"))
+'''
 
 #글 삭제
 @app.route("/delete_done",methods=['GET','POST'])
@@ -162,6 +158,28 @@ def delete_done():
     DB.delete_post(pid)
     return redirect(url_for("index"))
 
+#글수정
+
+@app.route("/modify/<string:uid>",methods=['GET','POST'])
+def modify(uid):
+    if "uid" in session:#로그인 된 상태
+        user = session["uid"]
+        post = DB.modify_post(uid)
+        return render_template("modify.html",post=post,user =user)
+    else:#로그아웃상태
+        user = "LOGIN"
+        return redirect(url_for("login"))
+
+@app.route("/modify_done",methods=['GET','POST'])
+def modify_done():
+    title=request.args.get("title")
+    contents=request.args.get("contents")
+    cost=request.args.get("cost")
+    keyword=request.args.get("keyword")
+    uid = session.get("uid")
+    status=request.args.get("판매상태")
+    
+    return redirect(url_for("index"))
 
 #유저 글 모아 보기
 @app.route("/user/<string:uid>")

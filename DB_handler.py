@@ -1,7 +1,7 @@
-
 import pyrebase
 import json
 import uuid
+
 
 class DBModule:
     def __init__(self):
@@ -87,14 +87,16 @@ class DBModule:
         
             
    
-    def write_post(self,title,contents,cost,keyword,uid):
+    def write_post(self,title,contents,cost,keyword,uid,status):
         pid = str(uuid.uuid4())[:10] #랜덤 아이디 저장
         infomation = {
             "title" : title,
             "contents" : contents,
             "cost" : cost,
             "keyword":keyword,
-            "uid" : uid
+            "uid" : uid,
+            "status" :status,
+            #"image" : image
         }
         self.db.child("posts").child(pid).set(infomation)
 
@@ -106,6 +108,10 @@ class DBModule:
                 if post[0] == pid:
                     print(pid,'삭제함')
                     self.db.child("posts").child(pid).remove()
+                
+    def modify_post(self,uid):
+        users_post = self.db.child("posts").get().val()
+        return users_post
         
     
     def post_list(self): #전체 포스트
