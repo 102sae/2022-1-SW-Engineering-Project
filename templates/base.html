@@ -23,12 +23,15 @@
     <header class="base_header"> 
         <div class="main_name"><a href="{{url_for('index')}}"><I >DAPARA</I></a></div>
         <div class="header-search">
-        
-        <input
-          class="header-searchbox"
-          type="text"
-          placeholder="물품명을 검색하세요"
-        />
+            <input
+              class="header-searchbox"
+              type="text"
+              placeholder="물품명을 검색하세요"
+              name="s_keyword"
+              id="s_keyword"
+            />
+            <input type="button" value="검색" onClick="location.href='search_list.html'">
+  
       </div>
       </div>
 

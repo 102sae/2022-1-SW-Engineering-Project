@@ -48,11 +48,11 @@
 <body>
     <div class="main_name"><a href="{{url_for('index')}}"><I>DAPARA</I></a><p>중고 거래 1등 플랫폼</p></div>
 <div class="total">
-    <form action="{{url_for('write_done')}}" method= "GET" >
-        <input type="text" placeholder="제목을 입력해주세요" name="title" id="title" required/>
-        <input type="text" placeholder="내용을 입력해주세요" name="contents" id="contents" required/>
-        <input type="number" placeholder="가격" name="cost" id="cost" required/>
-        <!--키워드 입력-->
+    <form action="{{url_for('edit_done')}}" method= "GET" >
+        <input type="text" placeholder="제목을 입력해주세요" name="title" id="title"  value ="{{post.title}}" srequired/>
+        <input type="text" placeholder="내용을 입력해주세요" name="contents" id="contents" value ="{{post.contents}}" required/>
+        <input type="number" placeholder="가격" name="cost" id="cost" value ="{{post.cost}}" required/>
+        <input type="text" placeholder="키워드" name="keyword" id="keyword" value ="{{post.keyword}}" required/>    
         <!--사진 업로드-->
     
         <input type = "submit" />

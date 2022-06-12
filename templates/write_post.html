@@ -81,7 +81,12 @@
         <input type="text" placeholder="제목을 입력해주세요" name="title" id="title" required/>
         <input type="text" placeholder="내용을 입력해주세요" name="contents" id="contents" required/>
         <input type="number" placeholder="가격" name="cost" id="cost" required/>
-        <input type="text" placeholder="키워드" name="keyword" id="keyword" required/>      
+        <input type="text" placeholder="키워드" name="keyword" id="keyword" required/>
+        <p>사진을 선택해주세요</p>
+        <input type="file" name="image" id="image">
+        <p>판매상태를 선택해주세요</p>
+        <label><input type="radio" name="판매상태" value="판매중"> 판매중 </label>
+        <label><input type="radio" name="판매상태" value="판매완료"> 판매완료 </label>
         <input type = "submit" />
     </form>
 
