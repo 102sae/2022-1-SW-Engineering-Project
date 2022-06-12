@@ -29,7 +29,6 @@
         <p class="main_name_p" >중고 거래 1등 플랫폼</p>
     </div>
 
-
     <div class="product_list-body">
         {% block contents %} <!--콘텐츠 시작-->
         {% if length == 0 %}
@@ -40,7 +39,7 @@
             {% for post in post_list %}
             <div class="product_list">
                 <div class="product_img">
-                    
+                    <img src="/static/1.jpg" alt="My Image">
                 </div>
                 <div class="product_list_info">
                 <a href="{{url_for('post',pid=post[0])}}">
@@ -52,15 +51,11 @@
                 </div>
             </div>
             
-            
             {% endfor %}
            </div>
         {% endif %}
         {% endblock contents %}
     </div>
-
-   
-    
       
 </body>
 </html>

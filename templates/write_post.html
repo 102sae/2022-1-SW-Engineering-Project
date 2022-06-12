@@ -40,7 +40,6 @@
         text-align: center;
         border-radius: 10px;
     }
-
     .main_name{
     margin-top: 20px;
     text-align: center;
@@ -82,7 +81,9 @@
         <input type="file" name="file" class="form-control" autocomplete="off" required>
         <input type="text" placeholder="내용을 입력해주세요" name="contents" id="contents" required/>
         <input type="number" placeholder="가격" name="cost" id="cost" required/>
-        <input type="text" placeholder="키워드" name="keyword" id="keyword" required/>      
+        <input type="text" placeholder="키워드" name="keyword" id="keyword" required/>
+        <label><input type="radio" name="판매상태" value="판매중"> 판매중 </label>
+        <label><input type="radio" name="판매상태" value="판매완료"> 판매완료 </label>
         <input type = "submit" />
     </form>
 

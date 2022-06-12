@@ -53,9 +53,11 @@
         .product_detail_img{
             width: 700px;
             height: 450px;
-            background-color: lightblue;
         }
-
+        img{
+            width: 700px;
+            height: 450px;
+        }
         .detail_title{
             font-size: large;
         }
@@ -71,7 +73,8 @@
 <div class="product_detail_warp">
     <div class="product_detail">
         
-        <div class="product_detail_img">
+        <div class="product_detail_img" >
+        <img src="/static/1.jpg" alt="My Image">
         {% if filename %}
             <img src="{{ url_for('display_image', filename=filename) }}">
         {% endif %}
@@ -83,6 +86,9 @@
     <p>{{post.contents}}</p>
 
     <p>#{{post.keyword}}</p>
+    <p>판매상태: {{post.status}}</p>
+    <p>{{post.display_image}}</p>
+
     </div>
 </div>
     

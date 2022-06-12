@@ -110,6 +110,11 @@
         #follow__btns button:active {
         transform: scale(0.98);
         }
+
+        img{
+            width: 250px;
+            height:230px;
+        }
     </style>
 </head>
 
@@ -144,7 +149,7 @@
             {% for post in post_list %}
             <div class="mypage_list">
                 <div class="mypage_img">
-                    
+                    <img src="/static/1.jpg" alt="My Image">
                 </div>
                 <div class="mypage_list_info">
                 <a href="{{url_for('post',pid=post[0])}}">
@@ -154,8 +159,7 @@
                     <p >{{post[1].uid}}</p>
                 </a>
                 </div>
-                
-                <a class ="edit_delete" href="{{ url_for('edit',pid=post[0])}} ">수정</a>
+                <a class ="edit_delete" href="{{ url_for('index',pid=post[0])}} ">수정</a>
                 <a class ="edit_delete" href="{{ url_for('delete_done',pid=post[0])}} ">삭제</a>
         </div>
         {% endfor %}

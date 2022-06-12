@@ -7,11 +7,10 @@
     <link rel="stylesheet" href="static/style.css" />  
 </head>
 <style>
-    /*메인 로고*/
+    /*메인 로고*/ 
 .main_name{
     margin-top: 20px;
     text-align: center;
-    
 }
 
 I{
@@ -77,7 +76,10 @@ a:hover {
     background-color: whitesmoke;
 }
 
-
+img{
+    width: 250px;
+    height:230px;
+}
 </style>
 
 <body >
@@ -103,7 +105,7 @@ a:hover {
            {% for post in post_list[i] %}
            <div class="product_list">
                <div class="product_img">
-                   
+                <img src="/static/1.jpg" alt="My Image">
                </div>
                <div class="product_list_info">
                <a href="{{url_for('post',pid=post[0])}}">
@@ -121,8 +123,5 @@ a:hover {
         {% endblock contents %}
     </div>
 
-   
-    
-      
 </body>
 </html>

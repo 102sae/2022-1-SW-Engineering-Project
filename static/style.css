@@ -171,6 +171,9 @@ button {
 .product_img{
     width: 250px;
     height:230px;
-    background-color: whitesmoke;
 }
 
+img{
+    width: 250px;
+    height:230px;
+}
