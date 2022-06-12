@@ -108,10 +108,6 @@ class DBModule:
                 if post[0] == pid:
                     print(pid,'삭제함')
                     self.db.child("posts").child(pid).remove()
-                
-    def modify_post(self,uid):
-        users_post = self.db.child("posts").get().val()
-        return users_post
         
     
     def post_list(self): #전체 포스트
@@ -144,9 +140,13 @@ class DBModule:
             post_list.append(self.get_user(f))
         return post_list
         
-    
+    '''
     def search(self):
-        pass
-
+        searching_list = []
+        post_lists = self.db.child("posts").get().val()
+        for f in post_lists:
+            if keyword 
+        return searching_list
+'''
 
    

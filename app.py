@@ -158,29 +158,6 @@ def delete_done():
     DB.delete_post(pid)
     return redirect(url_for("index"))
 
-#글수정
-
-@app.route("/modify/<string:uid>",methods=['GET','POST'])
-def modify(uid):
-    if "uid" in session:#로그인 된 상태
-        user = session["uid"]
-        post = DB.modify_post(uid)
-        return render_template("modify.html",post=post,user =user)
-    else:#로그아웃상태
-        user = "LOGIN"
-        return redirect(url_for("login"))
-
-@app.route("/modify_done",methods=['GET','POST'])
-def modify_done():
-    title=request.args.get("title")
-    contents=request.args.get("contents")
-    cost=request.args.get("cost")
-    keyword=request.args.get("keyword")
-    uid = session.get("uid")
-    status=request.args.get("판매상태")
-    
-    return redirect(url_for("index"))
-
 #유저 글 모아 보기
 @app.route("/user/<string:uid>")
 def user_posts(uid):
@@ -244,3 +221,21 @@ def post(pid):
 
 if __name__ == "__main__":
     app.run(debug=True)
+    
+# 글 검색
+@app.route("/search/new")
+def search_list():
+    uid = request.args.get('user', default = 'user', type = str) #user id가져오기
+    if "uid" in session: #로그인 된 상태일 경우 
+        user = session["uid"]
+    else:
+        user = "Login" #로그아웃 된 상태일 경우
+
+    follower_post = DB.get_follower(uid)
+
+    if follower_post == None:
+        length = 0
+    else :
+        length = len(follower_post)
+    
+    return render_template('following_list.html',post_list = follower_post,length = length,user =user)

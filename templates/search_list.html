@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/style.css" />  
+</head>
+<style>
+    /*메인 로고*/ 
+.main_name{
+    margin-top: 20px;
+    text-align: center;
+}
+
+I{
+    font-size: 40px;
+    color: blue;
+    font-weight: bold;
+    text-shadow: 4px 2px 2px gray;
+}
+
+.main_name_p{
+    margin-top: -6px;
+}
+
+a:link { 
+    color: inherit; /* 링크의 색상 제거 */
+    text-decoration: none; 
+}
+
+a:visited { 
+    color: inherit; /* 링크의 색상 제거 */
+    text-decoration: none;
+   }
+
+a:hover {
+    color : blue;
+    text-decoration: none;
+   }
+.product_list-body{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.product_wrap{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 1000px;
+    height: 100%;
+    justify-content: center;
+}
+
+.product_list{
+    width: 250px;
+    height:300px;
+    background-color: lightblue;
+    margin: 10px 20px;
+}
+
+
+.product_list_info{
+    text-align: center;
+}
+
+.product_user_info{
+    margin-top: 3px;
+}
+
+.product_img{
+    width: 250px;
+    height:230px;
+    background-color: whitesmoke;
+}
+
+
+</style>
+
+<body >
+
+   
+    
+    <div class="main_name"><a href="{{url_for('index')}}"><I>DAPARA</I></a>
+        <p class="main_name_p" >중고 거래 1등 플랫폼</p>
+        <h2>FOLLOWING</h2>
+    </div>
+
+
+    <div class="product_list-body">
+        
+        {% block contents %} <!--콘텐츠 시작-->
+        {% if length == 0 %}
+            <p>작성된 포스트가 없습니다. </p>
+        {% else %}
+        
+           <div class="product_wrap">
+        
+           {% for i in range(length) %}
+           {% for post in post_list[i] %}
+           <div class="product_list">
+               <div class="product_img">
+                   
+               </div>
+               <div class="product_list_info">
+               <a href="{{url_for('post',pid=post[0])}}">
+                   <div>
+                       <p class="product_user_info"> {{post[1].title}} {{post[1].cost}}원</p>
+                   </div>
+                   <p >{{post[1].uid}}</p>
+               </a>
+               </div>
+           </div>
+           {% endfor %}
+           {% endfor %}
+           </div>
+        {% endif %}
+        {% endblock contents %}
+    </div>
+
+</body>
+</html>
