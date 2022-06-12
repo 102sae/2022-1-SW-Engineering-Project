@@ -10,6 +10,7 @@ class DBModule:
 
         firebase = pyrebase.initialize_app(config)
         self.db = firebase.database() #연결
+
     
     def signin_verification(self,uid): 
         users = self.db.child("users").get().val() #user에 저장된 모든 정보 불러오기
@@ -151,7 +152,7 @@ class DBModule:
         self.db.child("posts").child(pid).set(infomation)
 
     def search(self):
-        searching_list = []
-        post_lists = self.db.child("posts").get().val()
+        a = self.db.child("posts").order_by_child("keyword").equal_to("띠부띠부씰").get()
+        print(a)
 
-        return searching_list
+        

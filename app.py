@@ -221,17 +221,5 @@ if __name__ == "__main__":
 # 글 검색
 @app.route("/search/new")
 def search_list():
-    uid = request.args.get('user', default = 'user', type = str) #user id가져오기
-    if "uid" in session: #로그인 된 상태일 경우 
-        user = session["uid"]
-    else:
-        user = "Login" #로그아웃 된 상태일 경우
-
-    follower_post = DB.get_follower(uid)
-
-    if follower_post == None:
-        length = 0
-    else :
-        length = len(follower_post)
-    
-    return render_template('following_list.html',post_list = follower_post,length = length,user =user)
+    DB.search()
+    return url_for('index')
