@@ -77,8 +77,9 @@
 <body>
     <div class="main_name"><a href="{{url_for('index')}}"><I>DAPARA</I></a><p>중고 거래 1등 플랫폼</p></div>
 <div class="total">
-    <form action="{{url_for('write_done')}}" method= "GET" >
+    <form action="{{url_for('write_done')}}" method= "GET|POST"   enctype="multipart/form-data">
         <input type="text" placeholder="제목을 입력해주세요" name="title" id="title" required/>
+        <input type="file" name="file" class="form-control" autocomplete="off" required>
         <input type="text" placeholder="내용을 입력해주세요" name="contents" id="contents" required/>
         <input type="number" placeholder="가격" name="cost" id="cost" required/>
         <input type="text" placeholder="키워드" name="keyword" id="keyword" required/>      

@@ -111,8 +111,8 @@ def unfollowing_user(uid):
     
 #글 작성
 def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 '''
 사진 업로드
 @app.route('/uploadpost')
@@ -152,8 +152,26 @@ def write_done():
     keyword = request.args.get("keyword")
     uid = session.get("uid") # 글 내용
     DB.write_post(title,contents,cost,keyword,uid)
-
     return redirect(url_for("index"))
+
+#글 수정
+@app.route("/edit_post")
+def edit():
+    pid = request.args.get('pid')    
+    post = DB.post_detail(pid)
+    return render_template("edit_post.html",post=post)
+    
+@app.route("/edit_done",methods=['GET','POST'])
+def edit_done():
+    title  =  request.args.get("title") 
+    contents  = request.args.get("contents")
+    cost = request.args.get("cost")
+    keyword = request.args.get("keyword")
+    uid = session.get("uid") # 글 내용 
+    print(title)
+    DB.write_post(title,contents,cost,keyword,uid)
+    return redirect(url_for("index"))
+
 
 #글 삭제
 @app.route("/delete_done",methods=['GET','POST'])

@@ -138,7 +138,16 @@ class DBModule:
             post_list.append(self.get_user(f))
         return post_list
         
-    
+    def edit_post(self,pid,title,contents,cost,keyword,uid):
+        infomation = {
+            "title" : title,
+            "contents" : contents,
+            "cost" : cost,
+            "keyword":keyword,
+            "uid" : uid
+        }
+        self.db.child("posts").child(pid).set(infomation)
+
     def search(self):
         pass
 
