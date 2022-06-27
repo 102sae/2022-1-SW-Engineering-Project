@@ -1,4 +1,3 @@
-# software-engineering
 # trading market
 
 ## user manual
